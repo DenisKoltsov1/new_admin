@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/styles.css">
+    <title>Главная страница</title>
+</head>
+<body>
+    <header>
+        <h1>Главная страница</h1>
+    </header>
+    
+    <nav class="top-menu">
+        <ul>
+            <li><a href="/articles">Статьи</a></li>
+            <li><a href="/router_setup">Настройка роутеров</a></li>
+            <li><a href="/antivirus_installation">Установка антивирусов</a></li>
+            <li><a href="/pc_setup">Настройка ПК</a></li>
+            <li><a href="/other_services">Другие услуги</a></li>
+            <li><a href="/chat">Чат</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <aside>
+ 
+            <!-- Боковое меню с разделителями -->
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a href="/about">О нас</a></li>
+                    <li><a href="/contact">Контакты</a></li>
+                    <li><a href="/services">Услуги</a></li>
+                    <li><a href="/prices">Цены</a></li>
+                    <li><a href="/faq">Часто задаваемые вопросы</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <main>
+            {% block content %}{% endblock %}
+        </main>
+    </div>
+<!--
+    <footer>
+        <p>&copy; 2024 Системные Администраторские Услуги. Все права защищены.</p>
+    </footer>
+</body>
+</html>
+-->

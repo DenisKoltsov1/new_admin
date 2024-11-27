@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+ 
+<main>
+    <section>
+        <h2>Статьи</h2>
+        <!-- Таблица со статьями -->
+        <table border="1" cellspacing="0" cellpadding="10">
+            <thead>
+                <tr>
+                    <th>Название статьи</th>
+                    <th>Описание</th>
+                    <th>Ссылка</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Настройка роутеров</td>
+                    <td>Полное руководство по настройке роутеров для дома и офиса.</td>
+                    <td><a href="/articles/router_setup">Читать статью</a></td>
+                </tr>
+                <tr>
+                    <td>Установка антивирусов</td>
+                    <td>Советы по выбору и установке антивирусного ПО.</td>
+                    <td><a href="/articles/antivirus_installation">Читать статью</a></td>
+                </tr>
+                <tr>
+                    <td>Настройка ПК</td>
+                    <td>Оптимизация работы компьютера для повышения производительности.</td>
+                    <td><a href="/articles/pc_setup">Читать статью</a></td>
+                </tr>
+                <tr>
+                    <td>Безопасность в интернете</td>
+                    <td>Основные рекомендации для защиты ваших данных в интернете.</td>
+                    <td><a href="/articles/internet_safety">Читать статью</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</main>
+
+{% endblock %}
