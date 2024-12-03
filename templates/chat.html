@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+    <!--
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var socket = io();
+
+            socket.on('connect', function () {
+                socket.send('');
+            });
+
+            socket.on('message', function (msg) {
+                var chat = document.getElementById('chat');
+                var message = document.createElement('div');
+                message.innerText = msg;
+                chat.appendChild(message);
+            });
+
+            document.getElementById('sendbutton').onclick = function () {
+                var text = document.getElementById('message').value;
+                socket.send(text);
+                document.getElementById('message').value = '';
+            };
+        });
+    </script>
+
+-->
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var socket = io();
+        var username = null;
+
+        socket.on('message', function (data) {
+            if (data.error) {
+                alert(data.error);
+                return;
+            }
+            var chat = document.getElementById('chat');
+            var message = document.createElement('div');
+            message.innerHTML = '<b>' + data.username + ':</b> ' + data.msg;
+            chat.appendChild(message);
+        });
+
+        document.getElementById('sendbutton').onclick = function () {
+            var text = document.getElementById('message').value.trim();
+            if (!text) return;
+
+            if (!username) {
+                username = prompt("Введите ваше имя:");
+                if (!username) return; // Если пользователь нажал отмену или ввел пустое имя
+            }
+
+            socket.emit('message', { username: username, msg: text });
+            document.getElementById('message').value = '';
+        };
+    });
+</script>
+    <h1>Chat Room</h1>
+    <div id="chat" style="border:1px solid #000; height:300px; overflow-y:scroll;"></div>
+    <input id="message" type="text" placeholder="Type your message here...">
+    <button id="sendbutton">Send</button>
+    {% endblock %}
+

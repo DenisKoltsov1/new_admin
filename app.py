@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, jsonify
 from flask_socketio import SocketIO, send
-
+from flask import Flask, render_template, session
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'  # Добавьте секретный ключ для сокетов
 
 # Инициализируем объект socketio
-socketio = SocketIO(app)
 
+socketio = SocketIO(app, async_mode='threading')
+
+active_users = set()
 # Маршрут для главной страницы
 @app.route('/')
 def index():
@@ -74,11 +76,42 @@ def antivirus_installation_page():
 def faq():
     return render_template('faq.html')
 
-# Обработка сообщений WebSocket
+
 @socketio.on('message')
-def handle_message(msg):
-    print(f'Получено сообщение: {msg}')
-    send(msg, broadcast=True)  # Отправляем сообщение всем подключенным клиентам
+def handle_message(data):
+    username = session.get('username')
+    msg = data.get('msg')
+    
+    if not username:
+        username = data.get('username')
+        if username in active_users:
+            send({'error': 'Имя уже занято! Выберите другое.'}, to=request.sid)
+            return
+        else:
+            session['username'] = username
+            active_users.add(username)
+            send({'username': username, 'msg': 'присоединился к чату!'}, broadcast=True)
+    
+    send({'username': username, 'msg': msg}, broadcast=True)
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    username = session.get('username')
+    if username in active_users:
+        active_users.remove(username)
+        send({'username': username, 'msg': 'покинул чат.'}, broadcast=True)
+
+#@socketio.on('message')
+#def handle_message(msg):
+#    print('Message: ' + msg)
+#    send(msg, broadcast=True)  # Рассылает сообщение всем клиентам
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    username = session.get('username')
+    if username in active_users:
+        active_users.remove(username)
+        send({'username': username, 'msg': 'покинул чат.'}, broadcast=True)
 
 if __name__ == '__main__':
     app.run(debug=True)
