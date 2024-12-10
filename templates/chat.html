@@ -59,6 +59,10 @@
     });
 </script>
     <h1>Chat Room</h1>
+    <h1>Добро пожаловать, {{ username }}!</h1>
+    {% if role == 'admin' %}
+    <h3>Вы вошли как администратор</h3>
+    {% endif %}
     <div id="chat" style="border:1px solid #000; height:300px; overflow-y:scroll;"></div>
     <input id="message" type="text" placeholder="Type your message here...">
     <button id="sendbutton">Send</button>

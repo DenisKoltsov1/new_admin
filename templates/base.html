@@ -5,12 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/static/styles.css">
     <title>Главная страница</title>
+    <style>
+        .auth-links {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            display: flex;
+            gap: 20px; /* Расстояние между ссылками */
+        }
+        .auth-links a {
+            color: white;
+            text-decoration: none;
+        }
+        .auth-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
     <header>
         <h1>Главная страница</h1>
-    </header>
-    
+        <!--
+        <div class="auth-links">
+            <a href="/register">Регистрация</a>
+            <a href="/login">Вход</a>
+            <a href="/logout">Выход</a>
+        </div>-->
+   
+    <div class="auth-links">
+        {% if session.get('username') %}
+            <!-- Если пользователь вошел -->
+            <span class="username">Привет, {{ session['username'] }}</span>
+            <a href="/logout">Выход</a>
+        {% else %}
+            <!-- Если пользователь не вошел -->
+            <a href="/register">Регистрация</a>
+            <a href="/login">Вход</a>
+        {% endif %}
+    </div>
+</header>
     <nav class="top-menu">
         <ul>
             <li><a href="/articles">Статьи</a></li>
@@ -24,8 +57,6 @@
 
     <div class="container">
         <aside>
- 
-            <!-- Боковое меню с разделителями -->
             <nav class="sidebar-menu">
                 <ul>
                     <li><a href="/about">О нас</a></li>
@@ -41,10 +72,6 @@
             {% block content %}{% endblock %}
         </main>
     </div>
-<!--
-    <footer>
-        <p>&copy; 2024 Системные Администраторские Услуги. Все права защищены.</p>
-    </footer>
+
 </body>
 </html>
--->

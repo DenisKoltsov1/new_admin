@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h2>Вход в чат</h2>
+    <form method="POST">
+        <label>Имя пользователя:</label>
+        <input type="text" name="username" required><br>
+        <label>Пароль:</label>
+        <input type="password" name="password" required><br>
+        <button type="submit">Войти</button>
+    </form>
+    <a href="{{ url_for('register') }}">Регистрация</a>
+    {% endblock %}
